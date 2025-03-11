@@ -17,7 +17,7 @@ namespace LethalPhysics.Patches
         {
             // If in space, do the modding.
             bool inSpace = StartOfRound.Instance?.inShipPhase ?? false;
-            if (inSpace)
+            if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value)
             {
                 __instance.fallValue = -0.1f;
 

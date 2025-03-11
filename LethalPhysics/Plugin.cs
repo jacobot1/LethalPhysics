@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BepInEx;
 using BepInEx.Logging;
+using BepInEx.Configuration;
 using HarmonyLib;
 using LethalPhysics.Patches;
 
@@ -16,7 +17,10 @@ namespace LethalPhysics
         // Mod metadata
         private const string modGUID = "jacobot5.LethalPhysics";
         private const string modName = "LethalPhysics";
-        private const string modVersion = "0.0.1";
+        private const string modVersion = "0.2.0";
+
+        // Configuration
+        public static ConfigEntry<bool> configGravityOnMoons;
 
         // Initalize Harmony
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -38,6 +42,12 @@ namespace LethalPhysics
             // Send alive message
             mls = BepInEx.Logging.Logger.CreateLogSource(modGUID);
             mls.LogInfo("LethalPhysics has awoken.");
+
+            // Bind configuration
+            configGravityOnMoons = Config.Bind("General.Toggles",
+                                                "GravityOnMoons",
+                                                true,
+                                                "Whether or not to enable gravity on moons");
 
             // Do the patching
             harmony.PatchAll(typeof(LethalPhysicsMod));
