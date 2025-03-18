@@ -29,7 +29,7 @@ namespace LethalPhysics
         private static LethalPhysicsMod Instance;
 
         // Initialize logging
-        internal ManualLogSource mls;
+        public static ManualLogSource mls;
 
         private void Awake()
         {
