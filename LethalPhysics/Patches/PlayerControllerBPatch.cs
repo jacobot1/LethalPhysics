@@ -6,11 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using GameNetcodeStuff;
 using HarmonyLib;
-using LethalPhysics;
 using UnityEngine;
-using Unity.Netcode;
-using BepInEx.Logging;
-using JetBrains.Annotations;
+
 
 namespace LethalPhysics.Patches
 {
@@ -19,11 +16,11 @@ namespace LethalPhysics.Patches
     {
         // Constants
         static float gravityConstant = -0.15f;
-        static float jumpThreshhold = 0.07f;
+        static float jumpVelocityThreshhold = 0.05f;
         static float velocityThreshhold = 0.1f;
-        static float maxExternalForces = 5f;
+        static float maxExternalForces = 4.2f;
         static float flyAwayBounds = 200f;
-        static float maxJumpFallValue = 4f;
+        static float maxJumpFallValue = 4.2f;
         //static float forceDivider = 2f;
         static Vector3 homePos = new Vector3(3.866463f, 0f, -14.225f);
 
@@ -88,7 +85,7 @@ namespace LethalPhysics.Patches
                 // If jumping, keep flying off into space.
                 if (isFallingFromJump)
                 {
-                    if (__instance.jetpackControls || ((__instance.thisController.velocity.y >= -jumpThreshhold) && (__instance.thisController.velocity.y <= jumpThreshhold)))
+                    if (__instance.jetpackControls || ((__instance.thisController.velocity.y >= -jumpVelocityThreshhold) && (__instance.thisController.velocity.y <= jumpVelocityThreshhold)))
                     {
                         isFallingFromJumpField.SetValue(__instance, false);
                     }
