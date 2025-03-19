@@ -2,9 +2,9 @@
 
 Float around like an astronaut while in space!
 
-- Configurable to allow disabling gravity on moons
+- Configurable: Change gravity on moons or disable it alltogether.
 
-- Newton's First Law
+- Newton's First Law (applies only in space or in zero gravity)
   
   - When players jump, they will continue flying upward until they hit something.
   

@@ -19,7 +19,7 @@ namespace LethalPhysics.Patches
         {
             // If in space, remove gravity for objects.
             bool inSpace = StartOfRound.Instance?.inShipPhase ?? false;
-            if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value || __instance.isInsideFactory)
+            if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value)
             {
                 return false;
             }

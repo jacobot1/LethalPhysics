@@ -17,10 +17,11 @@ namespace LethalPhysics
         // Mod metadata
         private const string modGUID = "jacobot5.LethalPhysics";
         private const string modName = "LethalPhysics";
-        private const string modVersion = "0.2.0";
+        private const string modVersion = "1.1.0";
 
         // Configuration
         public static ConfigEntry<bool> configGravityOnMoons;
+        public static ConfigEntry<float> configMoonGravityLevel;
 
         // Initalize Harmony
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -47,7 +48,12 @@ namespace LethalPhysics
             configGravityOnMoons = Config.Bind("General.Toggles",
                                                 "GravityOnMoons",
                                                 true,
-                                                "Whether or not to enable gravity on moons");
+                                                "Whether or not to enable gravity on moons.");
+
+            configMoonGravityLevel = Config.Bind("General.Toggles",
+                                                "MoonGravityLevel",
+                                                5f,
+                                                "Moon gravity constant. 5 is default. Only applies when GravityOnMoons = true. Not recommended to set to 0; use GravityOnMoons = false instead.");
 
             // Do the patching
             harmony.PatchAll(typeof(LethalPhysicsMod));

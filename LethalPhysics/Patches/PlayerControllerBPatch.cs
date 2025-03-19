@@ -18,7 +18,7 @@ namespace LethalPhysics.Patches
         static float gravityConstant = -0.15f;
         static float jumpVelocityThreshhold = 0.05f;
         static float velocityThreshhold = 0.1f;
-        static float maxExternalForces = 4.2f;
+        static float maxExternalForces = 4.7f;
         static float flyAwayBounds = 200f;
         static float maxJumpFallValue = 4.2f;
         //static float forceDivider = 2f;
@@ -69,20 +69,28 @@ namespace LethalPhysics.Patches
         [HarmonyPostfix]
         static void PlayerZeroGravityPatch(PlayerControllerB __instance)
         {
-            // If in space, do the modding.
+            // Determine whether ship is in space
             bool inSpace = StartOfRound.Instance?.inShipPhase ?? false;
-            if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value || __instance.isInsideFactory)
+
+            // Access private variable isFallingFromJump with reflection
+            FieldInfo isFallingFromJumpField = AccessTools.Field(typeof(PlayerControllerB), "isFallingFromJump");
+            bool isFallingFromJump = false;
+            if (isFallingFromJumpField != null)
             {
-                // Access private variable isFallingFromJump with reflection
-                FieldInfo isFallingFromJumpField = AccessTools.Field(typeof(PlayerControllerB), "isFallingFromJump");
-                bool isFallingFromJump = false;
+                isFallingFromJump = (bool)isFallingFromJumpField.GetValue(__instance);
+            }
 
-                if (isFallingFromJumpField != null)
-                {
-                    isFallingFromJump = (bool)isFallingFromJumpField.GetValue(__instance);
-                }
+            // Access private variable isJumping with reflection
+            FieldInfo isJumpingField = AccessTools.Field(typeof(PlayerControllerB), "isJumping");
+            bool isJumping = false;
+            if (isJumpingField != null)
+            {
+                isJumping = (bool)isJumpingField.GetValue(__instance);
+            }
 
-                // If jumping, keep flying off into space.
+            if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value)
+            {
+                // If jumping, keep flying off into space
                 if (isFallingFromJump)
                 {
                     if (__instance.jetpackControls || ((__instance.thisController.velocity.y >= -jumpVelocityThreshhold) && (__instance.thisController.velocity.y <= jumpVelocityThreshhold)))
@@ -109,7 +117,7 @@ namespace LethalPhysics.Patches
                     LethalPhysicsMod.mls.LogInfo(string.Format("velocity magnitude: {0}", __instance.thisController.velocity.magnitude));
                 }
                 */
-                
+
                 // Reset externalForces
                 if ((__instance.thisController.velocity.magnitude <= velocityThreshhold) || __instance.thisController.isGrounded)
                 {
@@ -131,6 +139,18 @@ namespace LethalPhysics.Patches
                     {
                         GameNetworkManager.Instance.localPlayerController.KillPlayer(Vector3.zero);
                     }
+                }
+            }
+            else
+            {
+                //__instance.jumpForce = 25 / LethalPhysicsMod.configMoonGravityLevel.Value;
+                if (isJumping)
+                {
+                    __instance.fallValue = 25f / LethalPhysicsMod.configMoonGravityLevel.Value;
+                }
+                if (isFallingFromJump)
+                {
+                    __instance.fallValue -= Time.deltaTime;
                 }
             }
         }
