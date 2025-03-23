@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameNetcodeStuff;
-using HarmonyLib;
-
+﻿using HarmonyLib;
 
 namespace LethalPhysics.Patches
 {
@@ -15,7 +8,7 @@ namespace LethalPhysics.Patches
     {
         [HarmonyPatch("FallWithCurve")]
         [HarmonyPrefix]
-        static bool ItemZeroGravityPatch(PlayerControllerB __instance)
+        static bool ItemZeroGravityPatch()
         {
             // If in space, remove gravity for objects.
             bool inSpace = StartOfRound.Instance?.inShipPhase ?? false;

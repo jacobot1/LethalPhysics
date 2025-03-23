@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Logging;
 using BepInEx.Configuration;
 using HarmonyLib;
@@ -22,6 +17,7 @@ namespace LethalPhysics
         // Configuration
         public static ConfigEntry<bool> configGravityOnMoons;
         public static ConfigEntry<float> configMoonGravityLevel;
+        public static ConfigEntry<float> configShotgunKnockback;
 
         // Initalize Harmony
         private readonly Harmony harmony = new Harmony(modGUID);
@@ -55,10 +51,16 @@ namespace LethalPhysics
                                                 5f,
                                                 "Moon gravity constant. 5 is default. Only applies when GravityOnMoons = true. Not recommended to set to 0; use GravityOnMoons = false instead.");
 
+            configShotgunKnockback = Config.Bind("General.Toggles",
+                                                "ShotgunKnockback",
+                                                8f,
+                                                "How much knockback is applied when player shoots the Shotgun in zero gravity. Default 8.");
+
             // Do the patching
             harmony.PatchAll(typeof(LethalPhysicsMod));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
             harmony.PatchAll(typeof(GrabbableObjectPatch));
+            harmony.PatchAll(typeof(ShotgunItemPatch));
         }
     }
 }

@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Patches\GrabbableObjectPatch.cs" />
     <Compile Include="Patches\PlayerControllerBPatch.cs" />
+    <Compile Include="Patches\ShotgunItemPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

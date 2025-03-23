@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
@@ -141,9 +136,8 @@ namespace LethalPhysics.Patches
                     }
                 }
             }
-            else
+            else if (LethalPhysicsMod.configMoonGravityLevel.Value != 5f)
             {
-                //__instance.jumpForce = 25 / LethalPhysicsMod.configMoonGravityLevel.Value;
                 if (isJumping)
                 {
                     __instance.fallValue = 25f / LethalPhysicsMod.configMoonGravityLevel.Value;

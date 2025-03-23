@@ -9,3 +9,5 @@ Float around like an astronaut while in space!
   - When players jump, they will continue flying upward until they hit something.
   
   - When players use the Jetpack, they will continue on the last trajectory they had until they hit something.
+  
+  - (NEW) When players shoot the Shotgun, they will be knocked back with a configurable force.
