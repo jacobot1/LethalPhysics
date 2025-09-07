@@ -10,7 +10,7 @@ namespace LethalPhysics
     public class LethalPhysicsMod : BaseUnityPlugin
     {
         // Mod metadata
-        private const string modGUID = "jacobot5.LethalPhysics";
+        private const string modGUID = "com.jacobot5.LethalPhysics";
         private const string modName = "LethalPhysics";
         private const string modVersion = "1.2.0";
 
@@ -41,26 +41,20 @@ namespace LethalPhysics
             mls.LogInfo("LethalPhysics has awoken.");
 
             // Bind configuration
-            configGravityOnMoons = Config.Bind("General.Toggles",
+            configGravityOnMoons = Config.Bind("Gravity",
                                                 "GravityOnMoons",
                                                 true,
                                                 "Whether or not to enable gravity on moons.");
 
-            configMoonGravityLevel = Config.Bind("General.Toggles",
+            configMoonGravityLevel = Config.Bind("Gravity",
                                                 "MoonGravityLevel",
                                                 5f,
                                                 "Moon gravity constant. 5 is default. Only applies when GravityOnMoons = true. Not recommended to set to 0; use GravityOnMoons = false instead.");
-
-            configShotgunKnockback = Config.Bind("General.Toggles",
-                                                "ShotgunKnockback",
-                                                8f,
-                                                "How much knockback is applied when player shoots the Shotgun in zero gravity. Default 8.");
 
             // Do the patching
             harmony.PatchAll(typeof(LethalPhysicsMod));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
             harmony.PatchAll(typeof(GrabbableObjectPatch));
-            harmony.PatchAll(typeof(ShotgunItemPatch));
         }
     }
 }

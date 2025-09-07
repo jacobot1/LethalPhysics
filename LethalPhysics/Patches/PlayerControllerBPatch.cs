@@ -3,7 +3,6 @@ using GameNetcodeStuff;
 using HarmonyLib;
 using UnityEngine;
 
-
 namespace LethalPhysics.Patches
 {
     [HarmonyPatch(typeof(PlayerControllerB))]
@@ -67,30 +66,14 @@ namespace LethalPhysics.Patches
             // Determine whether ship is in space
             bool inSpace = StartOfRound.Instance?.inShipPhase ?? false;
 
-            // Access private variable isFallingFromJump with reflection
-            FieldInfo isFallingFromJumpField = AccessTools.Field(typeof(PlayerControllerB), "isFallingFromJump");
-            bool isFallingFromJump = false;
-            if (isFallingFromJumpField != null)
-            {
-                isFallingFromJump = (bool)isFallingFromJumpField.GetValue(__instance);
-            }
-
-            // Access private variable isJumping with reflection
-            FieldInfo isJumpingField = AccessTools.Field(typeof(PlayerControllerB), "isJumping");
-            bool isJumping = false;
-            if (isJumpingField != null)
-            {
-                isJumping = (bool)isJumpingField.GetValue(__instance);
-            }
-
             if (inSpace || !LethalPhysicsMod.configGravityOnMoons.Value)
             {
                 // If jumping, keep flying off into space
-                if (isFallingFromJump)
+                if (__instance.isFallingFromJump)
                 {
                     if (__instance.jetpackControls || ((__instance.thisController.velocity.y >= -jumpVelocityThreshhold) && (__instance.thisController.velocity.y <= jumpVelocityThreshhold)))
                     {
-                        isFallingFromJumpField.SetValue(__instance, false);
+                        __instance.isFallingFromJump = false;
                     }
                     // Keep flying off into space
                     __instance.fallValue = maxJumpFallValue;
@@ -138,11 +121,11 @@ namespace LethalPhysics.Patches
             }
             else if (LethalPhysicsMod.configMoonGravityLevel.Value != 5f)
             {
-                if (isJumping)
+                if (__instance.isJumping)
                 {
                     __instance.fallValue = 25f / LethalPhysicsMod.configMoonGravityLevel.Value;
                 }
-                if (isFallingFromJump)
+                if (__instance.isFallingFromJump)
                 {
                     __instance.fallValue -= Time.deltaTime;
                 }
