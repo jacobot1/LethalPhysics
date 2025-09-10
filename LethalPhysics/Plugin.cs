@@ -10,9 +10,9 @@ namespace LethalPhysics
     public class LethalPhysicsMod : BaseUnityPlugin
     {
         // Mod metadata
-        private const string modGUID = "com.jacobot5.LethalPhysics";
-        private const string modName = "LethalPhysics";
-        private const string modVersion = "2.0.0";
+        public const string modGUID = "com.jacobot5.LethalPhysics";
+        public const string modName = "LethalPhysics";
+        public const string modVersion = "2.0.0";
 
         // Configuration
         public static ConfigEntry<bool> configGravityOnMoons;
@@ -55,6 +55,7 @@ namespace LethalPhysics
             harmony.PatchAll(typeof(LethalPhysicsMod));
             harmony.PatchAll(typeof(PlayerControllerBPatch));
             harmony.PatchAll(typeof(GrabbableObjectPatch));
+            harmony.PatchAll(typeof(KickIfModNotInstalled));
         }
     }
 }
