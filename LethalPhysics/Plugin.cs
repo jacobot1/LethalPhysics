@@ -12,7 +12,7 @@ namespace LethalPhysics
         // Mod metadata
         public const string modGUID = "com.jacobot5.LethalPhysics";
         public const string modName = "LethalPhysics";
-        public const string modVersion = "2.0.0";
+        public const string modVersion = "2.1.0";
 
         // Configuration
         public static ConfigEntry<bool> configGravityOnMoons;
