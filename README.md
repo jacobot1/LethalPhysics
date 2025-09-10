@@ -1,5 +1,7 @@
 # LethalPhysics
 
+UPDATE: Shotgun knockback removed; use my [LethalKnockback](https://thunderstore.io/c/lethal-company/p/SeismicMods/LethalKnockback/) mod to achieve the same effect (but better).
+
 Float around like an astronaut while in space!
 
 - Configurable: Change gravity on moons or disable it alltogether.
@@ -9,5 +11,3 @@ Float around like an astronaut while in space!
   - When players jump, they will continue flying upward until they hit something.
   
   - When players use the Jetpack, they will continue on the last trajectory they had until they hit something.
-  
-  - (NEW) When players shoot the Shotgun, they will be knocked back with a configurable force.
